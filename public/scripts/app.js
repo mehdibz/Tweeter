@@ -28,6 +28,7 @@ function escape(str) {
 }
 
 var $tweet,
+	status = false,
 	post_time;
 function renderTweets (data){
 	$('#tweets-container').empty();
@@ -67,8 +68,7 @@ function createTweetElement (tweetData){
 	return $tweet;
 }
 function loadTweets (){
-	$('#art').hide();
-    $.ajax({
+	$.ajax({
       url: '/tweets',
       method: 'GET',
       success: renderTweets
@@ -76,14 +76,17 @@ function loadTweets (){
 }
 
 $(document).ready(function(){
-	loadTweets();
 	validations();
+	loadTweets();
+	if(status){
+		$('#art').hide();
+	}
+	
 	
 	$('#compose').click(function(){
-
+			status = false,
     		$('#art').show();
 	});
-
 
 	$("#idForm").submit(function(e) {
 		e.preventDefault();
@@ -97,7 +100,6 @@ $(document).ready(function(){
        });
        $('#txarea').val("");
        $('#tweets-container').val("");
-
      })
 });
 
