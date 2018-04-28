@@ -21,3 +21,9 @@ This repository is the starter code for the project: Students will fork and clon
 - express ^4.13.4
 - md5 ^2.1.0
 - mongodb ^2.2.35
+
+## Screenshots
+
+![Ready to send a tweet](https://github.com/mehdibz/Tweeter/blob/master/docs/FirstPage(Home).png)
+![Ready to send a tweet](https://github.com/mehdibz/Tweeter/blob/master/docs/ComposeReady.png)
+![Prevent of invalid tweet](https://github.com/mehdibz/Tweeter/blob/master/docs/InvalidTweet.png)
