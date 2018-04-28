@@ -27,4 +27,4 @@ This repository is the starter code for the project: Students will fork and clon
 ![Home page](https://github.com/mehdibz/Tweeter/blob/master/docs/FirstPage_Home.png)
 ![Ready to send a tweet](https://github.com/mehdibz/Tweeter/blob/master/docs/ComposeReady.png)
 ![Prevent of invalid tweet](https://github.com/mehdibz/Tweeter/blob/master/docs/InvalidTweet.png)
-![Mouse hover on tweets](https://github.com/mehdibz/Tweeter/blob/master/docs/InvalidTweet.png)
+![Mouse hover on tweets](https://github.com/mehdibz/Tweeter/blob/master/docs/MouseHover.png)
