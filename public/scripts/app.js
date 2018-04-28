@@ -1,0 +1,106 @@
+/*
+ * Client-side JS logic goes here
+ * jQuery is already loaded
+ * Reminder: Use (and do all your DOM work in) jQuery's document ready function
+ */
+// Test / driver code (temporary). Eventually will get this from the server.
+	// event.preventDefault();
+function validations(){
+    $('#btn').attr('disabled',true);
+    $('#txarea').keyup(function(){
+        if(($(this).val().length !=0) && ($(this).val().length < 141)){
+            $('#btn').attr('disabled', false);
+            $('#errMessage').text('');
+        }
+        else{
+            $('#btn').attr('disabled',true);
+            if ($('#txarea').val().length > 141) {
+    			$('#errMessage').text('Your tweet is too long!');
+    		}
+        }
+    })
+}
+
+function escape(str) {
+  var div = document.createElement('div');
+  div.appendChild(document.createTextNode(str));
+  return div.innerHTML;
+}
+
+var $tweet,
+	post_time;
+function renderTweets (data){
+	$('#tweets-container').empty();
+	data.reverse().forEach(function(obj){
+		$tweet = createTweetElement(obj);
+		$('#tweets-container').append($tweet); 
+	});
+	return $('#tweets-container');
+}
+function check_date(tweetData) {
+
+	post_time = moment.unix(tweetData.created_at / 1000).fromNow();
+	return post_time;
+}
+
+function createTweetElement (tweetData){
+	var $tweet = $('<article>').addClass("tweet");
+	
+	$tweet = '<div class="tweet">' +
+				'<header>' +
+					'<div class="new_title">' +
+             			'<img class="tw_logo" src="' + tweetData.user.avatars.regular +'">' +
+             			'<label class="tweet_title">' + tweetData.user.name + '</label>' +	
+             			'<label class="tweet_id">' + tweetData.user.handle +' </label>' +
+          			'</div>' +
+          		'</header>' +
+          	 		'<div class="comment">' +
+          	 			'<p>' + escape(tweetData.content.text) + '</p>' +
+          	 		'</div>' +
+          	 	'<footer>' +
+          	 		'<label>' + check_date(tweetData) + '</label>' +
+          	 			'<i class="fas fa-heart"></i>' +
+          	 			'<i class="fas fa-retweet"></i>' +
+          	 			'<i class="fas fa-flag"></i>' +
+          	 	'</footer>' +
+          	 '</div>'
+	return $tweet;
+}
+function loadTweets (){
+	$('#art').hide();
+    $.ajax({
+      url: '/tweets',
+      method: 'GET',
+      success: renderTweets
+    });
+}
+
+$(document).ready(function(){
+	loadTweets();
+	validations();
+	
+	$('#compose').click(function(){
+
+    		$('#art').show();
+	});
+
+
+	$("#idForm").submit(function(e) {
+		e.preventDefault();
+		
+    var inputTweet =  $( this ).serialize();
+         	$.ajax({
+         	type: "POST",
+         	url: '/tweets',
+         	data: inputTweet,
+         	success: loadTweets
+       });
+       $('#txarea').val("");
+       $('#tweets-container').val("");
+
+     })
+});
+
+
+
+
